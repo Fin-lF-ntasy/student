@@ -1,6 +1,6 @@
 import { actionType } from "./actionType";
 import { appConstants } from "../constants";
-import { addStudent, getStudent } from "../studentService";
+import { getStudent } from "../studentService";
 
 export const moveExactlyToPage = (page) => ({
   type: actionType.MOVE_EXACTLY_TO_PAGE,

@@ -3,10 +3,10 @@ import { Modal, Button, Space } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import style from "./NewStudent.module.css";
-import { useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import * as Yup from "yup";
-import { useHistory } from "react-router-dom";
+import { push } from "connected-react-router";
 import { ErrorMessage, Field, Formik } from "formik";
 import { Utils } from "../utils/Utils";
 import { modifyStudent } from '../studentService';
@@ -32,32 +32,30 @@ function showConfirm(onOk, onCancel) {
 }
 
 export default function ModifyStudent(props) {
-  const studentId = useParams().id;
+  // const studentId = useParams().id;
 
-  const student = useSelector((state) =>
-    state.students.studentList.find((s) => s.id === studentId)
-  );
+  // const student = useSelector((state) =>
+  //   state.students.studentList.find((s) => s.id === studentId)
+  // );
 
-  const history = useHistory();
   const location = useLocation();
+  const dispatch = useDispatch();
   const modifiedStudent = location.state.modifiedStudent.data;
-  console.log(modifiedStudent);
 
   const handleSaveStudent = (values) => {
     values.createdDate = new Date(values.createdDate).toLocaleDateString('en-CA');
     delete values.img;
     delete values.id;
-    console.log(values);
-      modifyStudent(values);
-      history.push("/");
+    modifyStudent(values);
+      
     
   };
 
   const handleCancelModify = (dirty) => {
-    if (!dirty) history.push("/");
+    if (!dirty) dispatch(push('/'));
     else
       showConfirm(
-        () => history.push("/"),
+        () => dispatch(push('/')),
         () => {}
       );
   };

@@ -4,16 +4,15 @@ import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import { changeSearchingValue } from "../action/actionCreator";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { push } from 'connected-react-router';
 
 export default function Header() {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [searchText, setSearchText] = React.useState("");
 
   const handleMoveToNewStudentPage = () => {
-    history.push("/NewStudent");
+    dispatch(push('/NewStudent'));
   };
 
   return (

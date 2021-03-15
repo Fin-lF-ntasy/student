@@ -6,7 +6,8 @@ import style from "./NewStudent.module.css";
 import { Formik, Field, ErrorMessage } from "formik";
 // import { useDispatch } from "react-redux";
 // import { saveStudent } from "../action/actionCreator";
-import { useHistory } from "react-router-dom";
+import { push } from "connected-react-router";
+import { useDispatch } from "react-redux";
 import { Utils } from "../utils/Utils";
 import * as Yup from "yup";
 import { addStudent } from "../studentService";
@@ -33,21 +34,21 @@ function showConfirm(onOk, onCancel) {
 
 export default function NewStudent() {
   // const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSaveAdded = async (values) => {
     console.log(values);
     await addStudent(values);
-    history.push("/");
+    dispatch(push('/'));
     return;
     // dispatch(saveStudent(values));
   };
 
   const handleCancelAdding = (dirty) => {
-    if (!dirty) history.push("/");
+    if (!dirty) dispatch(push('/'));
     else
       showConfirm(
-        () => history.push("/"),
+        () => dispatch(push('/')),
         () => {}
       );
   };

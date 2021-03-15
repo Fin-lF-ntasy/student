@@ -1,12 +1,13 @@
 import React from "react";
 import style from "./StudentItem.module.css";
 import { Male, Female } from "react-gender";
-import { useHistory } from "react-router-dom";
+import { push } from "connected-react-router";
 import { Utils } from "../utils/Utils";
 import { getOneStudent } from "../studentService";
+import { useDispatch } from 'react-redux';
 
 export default function StudentItem({ student }) {
-  const history = useHistory();
+  const dispatch = useDispatch();
   const showGender = () => {
     if (student.gender === 1)
       return <Male color="#419fcf" className={style.genderType} />;
@@ -15,12 +16,12 @@ export default function StudentItem({ student }) {
 
   const handleBeginModifyStudent = async () => {
     const modifiedStudent = await getOneStudent(student.id);
-      history.push({
-        pathname: `/ModifyStudent/${student.id}`,
-        state: {
-          modifiedStudent: modifiedStudent
-        }
-      });
+    dispatch(push({
+      pathname: `/ModifyStudent/${student.id}`,
+      state: {
+        modifiedStudent: modifiedStudent
+      }
+    }));
   };
 
   return (
